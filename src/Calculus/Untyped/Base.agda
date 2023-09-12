@@ -100,6 +100,14 @@ instance
 Λ-is-set : is-set (Λ n)
 Λ-is-set = is-discrete→is-set Λ-is-discrete
 
+-- corollaries
+
+ap-inj : {A B C D : Λ n} → A · B ＝ C · D → (A ＝ C) × (B ＝ D)
+ap-inj e = let (AC , BD) = encodeΛ e in decodeΛ AC , decodeΛ BD
+
+ap≠lam : {A B : Λ n} {C : Λ (suc n)} → A · B ≠ ƛ C
+ap≠lam = encodeΛ
+
 ------------------------------------------------------------------------------
 -- Variable renaming
 
@@ -227,6 +235,9 @@ private
 
 {-
  -- TODO: Show that M -→ N is discrete
+ -- this will likely require fording the second index in the definition of β:
+ --   β : ∀ X → X ＝ M [ N ]ₗ → (ƛ M) · N -→ X
+
   decode→ : {M M′ N N′ : Λ n} {r : M -→ N} {s : M′ -→ N′}
     → (c : code→ r s)
     → PathP (λ i → decodeΛ {M = M} {N = M′} (toCodeΛₗ r s c) i -→ decodeΛ {M = N} {N = N′} (toCodeΛᵣ r s c) i) r s
@@ -234,7 +245,17 @@ private
   decode→ {r = ζ r} {s = ζ s} (c , d , e)      = {!!}
   decode→ {r = ξₗ r} {s = ξₗ s} (c , d , e , f) = {!!}
   decode→ {r = ξᵣ r} {s = ξᵣ s} (c , d , e , f) = {!!}
+
+  -→-is-discrete : {M N : Λ n} → is-discrete (M -→ N)
+  -→-is-discrete {n} {M} {N} = is-discrete-η (go {n} {M} {N})
+    where
+    go : {n : ℕ} {M N : Λ n} → Dec on-paths-of (M -→ N)
+    go {n} {M = .((ƛ M1) · N1)} {N = .(M1 [ N1 ]ₗ)} (β {M = M1} {N = N1}) y = {!!}
+    go {n} {.(ƛ _)} {.(ƛ _)} (ζ x) y = {!!}
+    go {n} {.(_ · _)} {.(_ · _)} (ξₗ x) y = {!!}
+    go {n} {.(_ · _)} {.(_ · _)} (ξᵣ x) y = {!!}
 -}
+
 ------------------------------------------------------------------------------
 -- Multi-step beta-reduction
 

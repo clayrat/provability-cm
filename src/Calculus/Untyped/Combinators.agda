@@ -25,6 +25,8 @@ infix 9 `⟨_,_⟩
 𝑻 = 𝑲
 𝑭 = ƛ ƛ 0
 
+-- Church encoding of tuples
+
 `⟨_,_⟩ : (M N : Λ n) → Λ n
 `⟨ M , N ⟩ = ƛ 0 · ↑₁ M · ↑₁ N
 
@@ -35,7 +37,7 @@ infix 9 `⟨_,_⟩
 `projᵣ M = M · 𝑭
 
 ------------------------------------------------------------------------------
--- Church encoding of naturals
+-- Church encoding of booleans
 
 𝕓 : Bool → Λ₀
 𝕓 false = 𝑭

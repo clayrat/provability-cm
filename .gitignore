@@ -3,3 +3,4 @@ Everything.agda
 *.agda#
 _build
 tags
+/html

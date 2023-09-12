@@ -1,4 +1,4 @@
-{-# OPTIONS --guarded  #-}
+{-# OPTIONS --guarded #-}
 
 module Assembly.ClockedExposure where
 

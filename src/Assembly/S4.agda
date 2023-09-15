@@ -179,7 +179,8 @@ module _ (Q : Quoting) where
       -→⟨ β ⟩
     App ⟪ exts (subst-zero ⌜ G ⌝ₗ) ⟫ [ ⌜ M ⌝ₗ ]ₗ
       -↠⟨ App-↠ ⟩
-    ⌜ G · M ⌝ₗ ∎ₗ )}
+    ⌜ G · M ⌝ₗ
+      ∎ₗ )}
     where
       open -↠-Reasoning
 
@@ -228,8 +229,7 @@ module _ (Q : Quoting) where
 -- quote (a) ≠ ⌜ a ⌝
 
   no-quoting : (η : Trackable Λ₀ₐ (⊠ Λ₀ₐ))
-    → ((M : Λ₀) → η .fst M ＝ ⊠map₀ (Final.global-element {0ℓ} {Λ₀ₐ} M M -↠-refl) (★ .fst (lift tt)))
-    → ⊥
+    → ¬ ((M : Λ₀) → η .fst M ＝ ⊠map₀ (Final.global-element {0ℓ} {Λ₀ₐ} M M -↠-refl) (★ .fst (lift tt)))
   no-quoting η hyp = quoting′-not-definable
     (Qη , Qη-is-quoting)
     where
@@ -240,10 +240,11 @@ module _ (Q : Quoting) where
         Qη [ M ]ₗ
           -↠⟨ (η .snd .HasTracker.F⊩f) -↠-refl .lower ⟩
         ⌜ η .fst M .fst ⌝ₗ
-        ≡⟨ ap ⌜_⌝ₗ (ap fst (hyp M)) ⟩
+          ≡⟨ ap ⌜_⌝ₗ (ap fst (hyp M)) ⟩
         ⌜ ↑ M [ _ ]ₗ ⌝ₗ
           ≡⟨ ap ⌜_⌝ₗ (subst-rename-∅ _ M) ⟩
-        ⌜ M ⌝ₗ ∎ₗ
+        ⌜ M ⌝ₗ
+          ∎ₗ
 
 ------------------------------------------------------------------------
 -- Projecting the intension of ⊠ X into ⊠ Λ
@@ -262,7 +263,8 @@ module _ (Q : Quoting) where
         -↠⟨ ·ᵣ-cong M-↠N ⟩
       Sub · ⌜ F ⌝ₗ · ⌜ N ⌝ₗ
         -↠⟨ Sub-↠ ⟩
-      ⌜ F [ N ]ₗ ⌝ₗ ∎ₗ) }
+      ⌜ F [ N ]ₗ ⌝ₗ
+        ∎ₗ) }
       where
         open -↠-Reasoning
 

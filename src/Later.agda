@@ -29,7 +29,7 @@ private
     l l1 : Level
     A : 𝒰 l
     B : A → 𝒰 l
-    k   : Cl
+    k : Cl
 
 ▹ : Cl → 𝒰 l → 𝒰 l
 ▹ k A = (@tick x : Tick k) → A
@@ -84,12 +84,15 @@ _⊛_ : ▹ k ((a : A) → B a)
   → Σ[ x ꞉ ▹ k A ] (▹[ α ∶ k ] B (x α))
 ▹Σ f = (λ α → fst (f α)) , λ α → snd (f α)
 
-▹-extensionality : {A : I → 𝒰 l} {x : ▹ k (A i0)} {y : ▹ k (A i1)}
+▹-ext : {A : I → 𝒰 l} {x : ▹ k (A i0)} {y : ▹ k (A i1)}
   → ▹[ α ∶ k ] PathP A (x α) (y α) → PathP (λ i → ▹ k (A i)) x y
-▹-extensionality p i α = p α i
+▹-ext p i α = p α i
 
 fix : (▹ k A → A) → A
 fix f = f (dfix f)
+
+pfix-ext : ∀ {l} {A : 𝒰 l} (f : ▹ k A → A) → ▸ k (λ α → dfix f α ＝ f (dfix f))
+pfix-ext f α i = pfix f i α
 
 fix-path : (f : ▹ k A → A) → fix f ＝ f (next (fix f))
 fix-path f i = f (pfix f i)
@@ -170,7 +173,6 @@ pfixΣ f = {!!}
   → is-set-□ (▹[ α ∶ k ] (A α))
 ▹isSet□→isSet□▹ hyp p q r s i j α = hyp α
   (λ i → p i α) (λ i → q i α) (λ j → r j α) (λ j → s j α) i j
-
 
 ▹x=▹y→▹x=y : (x y : ▹ k A)
   → (x ＝ y)

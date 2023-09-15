@@ -27,7 +27,7 @@ _IsLeftTotal : {A : 𝒰 ℓ} {B : 𝒰 ℓ′}
     → (_≈_ : A → B → 𝒰 (ℓ ⊔ ℓ′)) → 𝒰 (ℓ ⊔ ℓ′)
 _IsLeftTotal {A} {B} _≈_ = (x : A) → ∃[ y ꞉ B ] (x ≈ y)
 
-
+-- if M ⊩ x, M is a realiser of x
 record IsRealisability {X : 𝒰 ℓ} (_⊩_ : Λ₀ → X → 𝒰 ℓ) : 𝒰 ℓ where
   field
     ⊩-respects-↠  : _⊩_ respects _-↠_ on-the-left
@@ -90,6 +90,7 @@ record HasTracker (X Y : Asm ℓ) (f : ⟨ X ⟩ → ⟨ Y ⟩) : 𝒰 ℓ where
 --    f          : ⟨ X ⟩ → ⟨ Y ⟩
 --    hasTracker : HasTracker X Y f
 
+-- aka P-function
 Trackable : (X Y : Asm ℓ) → 𝒰 ℓ
 Trackable X Y = Σ[ f ꞉ (⟨ X ⟩ → ⟨ Y ⟩) ] HasTracker X Y f
 

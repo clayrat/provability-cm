@@ -9,8 +9,6 @@ open import Agda.Primitive.Cubical using ( primHComp ; primComp )
 open import Prelude
 open import Foundations.Cubes
 
--- open import Agda.Primitive
-
 module Prims where
   primitive
     primLockUniv : 𝒰₁
@@ -36,6 +34,9 @@ private
 
 ▸ : (k : Cl) → ▹ k (𝒰 l) → 𝒰 l
 ▸ k A = (@tick x : Tick k) → A x
+
+▸-eq : {A : 𝒰 l} {k : Cl} → ▸ k (λ _ → A) ＝ ▹ k A
+▸-eq = refl
 
 ▹-syntax : (k : Cl) → ▹ k (𝒰 l) → 𝒰 l
 ▹-syntax k A = (@tick α : Tick k) → A α
@@ -63,6 +64,7 @@ hcomp▹ : (A : ▹ k (𝒰 l)) (φ : I) (u : I → Partial φ (▸ k A))
   → (u0 : ▸ k A [ φ ↦ u i0 ]) → ▸ k A
 hcomp▹ A φ u u0 a = primHComp (λ { i (φ = i1) → u i 1=1 a }) (outS u0 a)
 
+-- aka pure
 next : A → ▹ k A
 next x α = x
 
@@ -87,7 +89,7 @@ _⊛_ : ▹ k ((a : A) → B a)
 ▹-ext : {A : I → 𝒰 l} {x : ▹ k (A i0)} {y : ▹ k (A i1)}
   → ▹[ α ∶ k ] PathP A (x α) (y α) → PathP (λ i → ▹ k (A i)) x y
 ▹-ext p i α = p α i
-
+ 
 fix : (▹ k A → A) → A
 fix f = f (dfix f)
 
